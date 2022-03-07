@@ -1,8 +1,8 @@
 package com.soom.account_api.domain.authorize.controller;
 
-import com.soom.account_api.domain.authorize.dto.AuthInfoDto;
-import com.soom.account_api.domain.authorize.request.SendAuthEmailRequest;
-import com.soom.account_api.domain.authorize.response.ConfirmAuthEmailResponse;
+import com.soom.account_api.domain.authorize.data.dto.AuthInfoDto;
+import com.soom.account_api.domain.authorize.data.request.SendAuthEmailRequest;
+import com.soom.account_api.domain.authorize.data.response.ConfirmAuthEmailResponse;
 import com.soom.account_api.domain.authorize.service.AuthorizeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,8 +33,8 @@ public class AuthorizeController {
         //인증코드를 삭제한다
         authorizeService.removeAuthInfo(code);
         //이메일을 통해 토큰을 생성하여 반환한다.
-        authorizeService.getTokenByEmail(email);
-        final ConfirmAuthEmailResponse response = new ConfirmAuthEmailResponse("");
+        final String token = authorizeService.getTokenByEmail(email);
+        final ConfirmAuthEmailResponse response = new ConfirmAuthEmailResponse(token);
         return ResponseEntity.ok(response);
     }
 }

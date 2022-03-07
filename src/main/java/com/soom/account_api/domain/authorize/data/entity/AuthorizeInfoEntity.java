@@ -1,6 +1,6 @@
-package com.soom.account_api.domain.authorize.entity;
+package com.soom.account_api.domain.authorize.data.entity;
 
-import com.soom.account_api.domain.authorize.dto.AuthInfoDto;
+import com.soom.account_api.domain.authorize.data.dto.AuthInfoDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,16 +1,22 @@
 package com.soom.account_api.domain.authorize.service;
 
-import com.soom.account_api.domain.authorize.dto.AuthInfoDto;
-import com.soom.account_api.domain.authorize.entity.AuthorizeInfoEntity;
+import com.soom.account_api.domain.authorize.data.dto.AuthInfoDto;
+import com.soom.account_api.domain.authorize.data.entity.AuthorizeInfoEntity;
 import com.soom.account_api.domain.authorize.exception.UnknownCodeException;
 import com.soom.account_api.domain.authorize.repository.AuthorizeInfoRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
 import static java.lang.Math.pow;
 
-public class RedisAndSmtpAuthorizeService implements AuthorizeService{
-    AuthorizeInfoRepository authorizeInfoRepository;
+@Service
+@RequiredArgsConstructor
+public class RedisAuthorizeService implements AuthorizeService{
+    private final AuthorizeMailSenderService authorizeMailSenderService;
+    private final AuthorizeTokenService authorizeTokenService;
+    private final AuthorizeInfoRepository authorizeInfoRepository;
 
     @Override
     public String createAuthCode() {
@@ -20,10 +26,13 @@ public class RedisAndSmtpAuthorizeService implements AuthorizeService{
             if (!authorizeInfoRepository.existsById(authCode)) return authCode;
         }
     }
+    private Integer randomNumber(final Integer length) {
+        return new Random().nextInt((int)pow(10, length + 1));
+    }
 
     @Override
     public void sendAuthCode(final AuthInfoDto dto) {
-        //TODO
+        authorizeMailSenderService.send(dto);
     }
 
     @Override
@@ -45,11 +54,7 @@ public class RedisAndSmtpAuthorizeService implements AuthorizeService{
     }
 
     @Override
-    public void getTokenByEmail(final String email) {
-        //TODO
-    }
-
-    private Integer randomNumber(final Integer length) {
-        return new Random().nextInt((int)pow(10, length + 1));
+    public String getTokenByEmail(final String email) {
+        return authorizeTokenService.token(email);
     }
 }

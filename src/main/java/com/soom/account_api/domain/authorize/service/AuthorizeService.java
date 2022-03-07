@@ -1,6 +1,6 @@
 package com.soom.account_api.domain.authorize.service;
 
-import com.soom.account_api.domain.authorize.dto.AuthInfoDto;
+import com.soom.account_api.domain.authorize.data.dto.AuthInfoDto;
 
 public interface AuthorizeService {
     String createAuthCode();
@@ -10,5 +10,5 @@ public interface AuthorizeService {
     void removeAuthInfo(String code);
 
     String getEmailByCode(String code);
-    void getTokenByEmail(String email);
+    String getTokenByEmail(String email);
 }
