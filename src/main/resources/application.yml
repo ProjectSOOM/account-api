@@ -1,0 +1,40 @@
+server:
+  port: ${ACCOUNT_SERVER_PORT}
+  address: ${ACCOUNT_SERVER_ADDRESS}
+  shutdown: graceful
+spring:
+  security:
+    user:
+      password: abcs
+  redis:
+    host: localhost
+    port: 6379
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  rabbitmq:
+    host: ${MQ_SERVER_ADDRESS}
+    port: ${MQ_SERVER_PORT}
+    username: ${MQ_SERVER_USER_NAME}
+    password: ${MQ_SERVER_PASSWORD}
+  application.name: account-api
+  config:
+    import: "optional:configserver:${CONFIG_SERVER_URL}"
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URL}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
+eureka:
+  instance:
+    hostname: infra.smup.xyz
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://infra.smup.xyz:10010/eureka/
