@@ -3,23 +3,13 @@ server:
   address: ${ACCOUNT_SERVER_ADDRESS}
   shutdown: graceful
 spring:
-  security:
-    user:
-      password: abcs
-  redis:
-    host: localhost
-    port: 6379
-  datasource:
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
+  application.name: account-api
   rabbitmq:
     host: ${MQ_SERVER_ADDRESS}
     port: ${MQ_SERVER_PORT}
     username: ${MQ_SERVER_USER_NAME}
     password: ${MQ_SERVER_PASSWORD}
-  application.name: account-api
+    ssl.enabled: true
   config:
     import: "optional:configserver:${CONFIG_SERVER_URL}"
   cloud:
@@ -29,7 +19,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh
+        include: busrefresh
 eureka:
   instance:
     hostname: infra.smup.xyz
