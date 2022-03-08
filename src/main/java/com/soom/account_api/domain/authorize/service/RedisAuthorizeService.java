@@ -21,13 +21,19 @@ public class RedisAuthorizeService implements AuthorizeService{
     @Override
     public String createAuthCode() {
         String authCode;
-        while (true) {
-            authCode = String.format("%6d", randomNumber(6));
-            if (!authorizeInfoRepository.existsById(authCode)) return authCode;
-        }
+        do { authCode = generateAuthCode(); }
+        while (checkAuthCodePolicy(authCode));
+        return authCode;
+    }
+
+    private boolean checkAuthCodePolicy(String authCode) {
+        return authorizeInfoRepository.existsById(authCode);
+    }
+    private String generateAuthCode() {
+        return String.format("%6d", randomNumber(6));
     }
     private Integer randomNumber(final Integer length) {
-        return new Random().nextInt((int)pow(10, length + 1));
+        return new Random().nextInt((int)pow(10, length));
     }
 
     @Override
