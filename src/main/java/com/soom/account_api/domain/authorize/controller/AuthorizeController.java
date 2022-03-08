@@ -4,13 +4,15 @@ import com.soom.account_api.domain.authorize.data.dto.AuthInfoDto;
 import com.soom.account_api.domain.authorize.data.request.SendAuthEmailRequest;
 import com.soom.account_api.domain.authorize.data.response.ConfirmAuthEmailResponse;
 import com.soom.account_api.domain.authorize.service.AuthorizeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v2/account/auth")
+@RequiredArgsConstructor
 public class AuthorizeController {
-    AuthorizeService authorizeService;
+    private final AuthorizeService authorizeService;
 
     //이메일 인증 발송
     @PostMapping("/email")

@@ -4,6 +4,7 @@ import com.soom.account_api.domain.authorize.data.dto.AuthInfoDto;
 import com.soom.account_api.domain.authorize.property.AuthorizeMailProperty;
 import com.soom.account_api.infra.service.MailSenderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
