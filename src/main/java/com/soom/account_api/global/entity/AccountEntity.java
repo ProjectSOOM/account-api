@@ -1,4 +1,4 @@
-package com.soom.account_api.domain.sign.data.entity;
+package com.soom.account_api.global.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public abstract class AccountEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,4 +21,11 @@ public abstract class AccountEntity {
     //Account Profile Information
     private String name;
     private LocalDate birth;
+
+    public AccountEntity(String email, String encodedPassword, String name, LocalDate birth) {
+        this.email = email;
+        this.encodedPassword = encodedPassword;
+        this.name = name;
+        this.birth = birth;
+    }
 }

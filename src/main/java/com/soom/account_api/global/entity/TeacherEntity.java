@@ -1,4 +1,4 @@
-package com.soom.account_api.domain.sign.data.entity;
+package com.soom.account_api.global.entity;
 
 import com.soom.account_api.domain.sign.data.type.TeacherType;
 import lombok.Getter;
@@ -15,14 +15,13 @@ public class TeacherEntity extends AccountEntity{
     private String code;
     private TeacherType teacher;
 
-    public TeacherEntity(Long id,
-                         String email,
+    public TeacherEntity(String email,
                          String encodedPassword,
                          String name,
                          LocalDate birth,
                          String code,
                          TeacherType teacher) {
-        super(id, email, encodedPassword, name, birth);
+        super(email, encodedPassword, name, birth);
         this.code = code;
         this.teacher = teacher;
     }

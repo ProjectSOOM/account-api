@@ -1,6 +1,6 @@
-package com.soom.account_api.domain.sign.data.repository;
+package com.soom.account_api.global.repository;
 
-import com.soom.account_api.domain.sign.data.entity.TeacherEntity;
+import com.soom.account_api.global.entity.TeacherEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TeacherRepository extends JpaRepository<TeacherEntity, Long> {
