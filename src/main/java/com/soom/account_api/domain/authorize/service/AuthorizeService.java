@@ -10,5 +10,7 @@ public interface AuthorizeService {
     void removeAuthInfo(String code);
 
     String getEmailByCode(String code);
+    String getEmailByToken(String token);
     String getTokenByEmail(String email);
+
 }

@@ -60,6 +60,11 @@ public class RedisAuthorizeService implements AuthorizeService{
     }
 
     @Override
+    public String getEmailByToken(final String token) {
+        return authorizeTokenService.email(token);
+    }
+
+    @Override
     public String getTokenByEmail(final String email) {
         return authorizeTokenService.token(email);
     }
