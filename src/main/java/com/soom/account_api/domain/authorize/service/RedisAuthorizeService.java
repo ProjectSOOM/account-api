@@ -30,7 +30,7 @@ public class RedisAuthorizeService implements AuthorizeService{
         return authorizeInfoRepository.existsById(authCode);
     }
     private String generateAuthCode() {
-        return String.format("%6d", randomNumber(6));
+        return String.format("%06d", randomNumber(6));
     }
     private Integer randomNumber(final Integer length) {
         return new Random().nextInt((int)pow(10, length));
