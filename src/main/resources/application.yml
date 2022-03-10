@@ -27,4 +27,4 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://infra.smup.xyz:10010/eureka/
+      defaultZone: ${EUREKA_DEFAULT_ZONE}
