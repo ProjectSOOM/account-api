@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -15,7 +16,8 @@ public class JwtAuthorizeTokenService implements AuthorizeTokenService {
 
     @Override
     public String token(final String email) {
-        final Map<String, Object> claim = Collections.singletonMap("email", email);
+        final Map<String, Object> claim = new HashMap<>();
+        claim.put("email", email);
         return JwtUtil.encode(authorizeJwtProperty.getSecret(), authorizeJwtProperty.getExpiredSeconds(), claim);
     }
 

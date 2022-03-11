@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -16,7 +17,8 @@ public class JwtAndUUIDTeacherCodeService implements TeacherCodeService {
 
     @Override
     public String token() {
-        final Map<String, Object> claim = Collections.singletonMap("code", teacherCodeJwtProperty.getPublicCode() + UUID.randomUUID());
+        final Map<String, Object> claim = new HashMap<>();
+        claim.put("code", teacherCodeJwtProperty.getPublicCode() + UUID.randomUUID());
         return JwtUtil.encode(teacherCodeJwtProperty.getSecret(), teacherCodeJwtProperty.getExpiredDay() * 60 * 60 * 24, claim);
     }
 

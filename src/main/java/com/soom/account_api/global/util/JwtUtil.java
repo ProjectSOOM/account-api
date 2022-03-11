@@ -14,15 +14,19 @@ public class JwtUtil {
     public static String encode(String secret, Long expiredSeconds, Map<String, Object> claims) {
         final LocalDateTime now = LocalDateTime.now();
         final LocalDateTime expiredDate = now.plusSeconds(expiredSeconds);
+
         return Jwts.builder()
+                .setClaims(claims)
                 .setIssuedAt(Timestamp.valueOf(now))
                 .setExpiration(Timestamp.valueOf(expiredDate))
-                .setClaims(claims)
                 .signWith(ALGORITHM, secret)
                 .compact();
     }
 
     public static Claims decode(String secret, String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        return Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
     }
 }
