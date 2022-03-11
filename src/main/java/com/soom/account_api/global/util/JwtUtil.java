@@ -1,5 +1,7 @@
 package com.soom.account_api.global.util;
 
+import com.soom.account_api.global.exception.JwtDecodeException;
+import com.soom.account_api.global.exception.JwtEncodeException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -15,18 +17,26 @@ public class JwtUtil {
         final LocalDateTime now = LocalDateTime.now();
         final LocalDateTime expiredDate = now.plusSeconds(expiredSeconds);
 
-        return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(Timestamp.valueOf(now))
-                .setExpiration(Timestamp.valueOf(expiredDate))
-                .signWith(ALGORITHM, secret)
-                .compact();
+        try {
+            return Jwts.builder()
+                    .setClaims(claims)
+                    .setIssuedAt(Timestamp.valueOf(now))
+                    .setExpiration(Timestamp.valueOf(expiredDate))
+                    .signWith(ALGORITHM, secret)
+                    .compact();
+        } catch (Exception e) {
+            throw new JwtEncodeException(e);
+        }
     }
 
     public static Claims decode(String secret, String token) {
-        return Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            throw new JwtDecodeException(e);
+        }
     }
 }
