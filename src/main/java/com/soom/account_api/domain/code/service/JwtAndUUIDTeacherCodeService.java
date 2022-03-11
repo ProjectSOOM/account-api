@@ -21,7 +21,10 @@ public class JwtAndUUIDTeacherCodeService implements TeacherCodeService {
     }
 
     @Override
-    public boolean valid(String token) {
-        return JwtUtil.decode(teacherCodeJwtProperty.getSecret(), token).get("code", String.class).equals(teacherCodeJwtProperty.getPublicCode());
+    public String code(String token) {
+        final String decoded = JwtUtil.decode(teacherCodeJwtProperty.getSecret(), token).get("code", String.class);
+        if(decoded.startsWith(teacherCodeJwtProperty.getPublicCode()))
+            return decoded.replace(teacherCodeJwtProperty.getPublicCode(), "");
+        return null; //TODO return null || throw runtime exception
     }
 }

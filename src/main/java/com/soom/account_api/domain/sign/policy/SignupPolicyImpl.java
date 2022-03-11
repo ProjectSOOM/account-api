@@ -39,7 +39,7 @@ public class SignupPolicyImpl implements SignupPolicy {
 
     @Override
     public boolean checkTeacherCode(String code) {
-        //TODO
+
         return true;
     }
 

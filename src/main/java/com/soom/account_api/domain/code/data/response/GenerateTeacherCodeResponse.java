@@ -1,4 +1,4 @@
-package com.soom.account_api.domain.authorize.data.response;
+package com.soom.account_api.domain.code.data.response;
 
 import java.util.List;
 
