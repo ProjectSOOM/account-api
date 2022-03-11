@@ -25,6 +25,7 @@ public class AccountServiceImpl implements AccountService{
     private final StudentRepository studentRepository;
     private final TeacherRepository teacherRepository;
     private final SignupPolicy signupPolicy;
+    private final AccountAuthorizeService accountAuthorizeService;
 
     @Override
     public void signUp(final StudentSignupInfoDto dto) {
@@ -51,6 +52,12 @@ public class AccountServiceImpl implements AccountService{
         teacherRepository.save(entity);
     }
 
+    @Override
+    public void withdrawal(WithdrawalInfoDto dto) {
+        Long id = accountAuthorizeService.authorize(dto.email(), dto.password());
+        accountRepository.deleteById(id);
+    }
+
     private void checkPolicy(final TeacherSignupInfoDto dto) {
         checkPolicy(dto.authInfo().email(), dto.authInfo().password(), dto.profileInfo().name(), dto.profileInfo().birth());
         if(!signupPolicy.checkTeacherCode(dto.teacherInfo().code())) throw new PolicyViolationException(SignupPolicyType.TEACHER_CODE_POLICY);
@@ -67,10 +74,5 @@ public class AccountServiceImpl implements AccountService{
         if(!signupPolicy.checkPasswordPolicy(password)) throw new PolicyViolationException(SignupPolicyType.PASSWORD_POLICY);
         if(! signupPolicy.checkNamePolicy(name)) throw new PolicyViolationException(SignupPolicyType.NAME_POLICY);
         if(!signupPolicy.checkBirthPolicy(birth)) throw new PolicyViolationException(SignupPolicyType.BIRTH_POLICY);
-    }
-
-    @Override
-    public void withdrawal(WithdrawalInfoDto dto) {
-        //TODO
     }
 }
