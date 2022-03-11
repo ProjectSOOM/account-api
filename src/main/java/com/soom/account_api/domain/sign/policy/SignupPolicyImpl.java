@@ -1,6 +1,7 @@
 package com.soom.account_api.domain.sign.policy;
 
 import com.soom.account_api.domain.sign.service.SchoolEmailValidService;
+import com.soom.account_api.domain.sign.service.TeacherCodeValidService;
 import com.soom.account_api.global.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 public class SignupPolicyImpl implements SignupPolicy {
     private final AccountRepository accountRepository;
     private final SchoolEmailValidService schoolEmailValidService;
+    private final TeacherCodeValidService teacherCodeValidService;
 
     @Override
     public boolean checkEmailPolicy(String email) {
@@ -34,13 +36,12 @@ public class SignupPolicyImpl implements SignupPolicy {
 
     @Override
     public boolean checkBirthPolicy(LocalDate birth) {
-        return birth.isBefore(LocalDate.now());
+        return birth.isBefore(LocalDate.now()); //생일은 현재 날짜보다 이전(과거)이어야한다.
     }
 
     @Override
     public boolean checkTeacherCode(String code) {
-
-        return true;
+        return teacherCodeValidService.valid(code); //교사코드의 검증은 ValidService 에 위임한다.
     }
 
     @Override

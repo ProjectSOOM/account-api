@@ -1,6 +1,6 @@
 package com.soom.account_api.domain.code.controller;
 
-import com.soom.account_api.domain.authorize.data.response.GenerateTeacherCodeResponse;
+import com.soom.account_api.domain.code.data.response.GenerateTeacherCodeResponse;
 import com.soom.account_api.domain.code.service.TeacherCodeGenerateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
