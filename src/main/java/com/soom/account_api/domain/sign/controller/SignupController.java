@@ -11,8 +11,6 @@ import com.soom.account_api.domain.sign.service.EmailTokenDecodeService;
 import com.soom.account_api.global.PolicyType;
 import com.soom.account_api.global.data.response.ErrorResponse;
 import com.soom.account_api.global.data.type.ErrorType;
-import com.soom.account_api.global.exception.JwtDecodeException;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
