@@ -10,6 +10,7 @@ import java.time.LocalDate;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "DTYPE")
 @Getter @Setter
 @NoArgsConstructor
 public abstract class AccountEntity {
