@@ -1,4 +1,4 @@
-package com.soom.account_api.domain.sign.data.type;
+package com.soom.account_api.global.data.type;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.soom.account_api.domain.sign.exception.UnknownSchoolTypeException;

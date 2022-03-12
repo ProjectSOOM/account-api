@@ -1,7 +1,8 @@
 package com.soom.account_api.global.entity;
 
-import com.soom.account_api.domain.sign.data.type.SchoolType;
-import com.soom.account_api.domain.sign.data.type.TeacherType;
+import com.soom.account_api.global.data.type.SchoolType;
+import com.soom.account_api.global.data.type.TeacherType;
+import com.soom.account_api.global.data.dto.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,5 +27,14 @@ public class TeacherEntity extends AccountEntity{
         super(email, encodedPassword, name, birth, schoolType);
         this.code = code;
         this.teacher = teacher;
+    }
+
+    @Override
+    public TeacherDto toDto() {
+        return new TeacherDto(
+                new AccountAuthInfoDto(getEmail(), getEncodedPassword()),
+                new AccountProfileInfoDto(getName(), getBirth(), getSchoolType()),
+                new TeacherInfoDto(code, teacher)
+        );
     }
 }

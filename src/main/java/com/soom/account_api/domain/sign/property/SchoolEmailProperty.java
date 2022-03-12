@@ -1,7 +1,7 @@
 package com.soom.account_api.domain.sign.property;
 
 
-import com.soom.account_api.domain.sign.data.type.SchoolType;
+import com.soom.account_api.global.data.type.SchoolType;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;

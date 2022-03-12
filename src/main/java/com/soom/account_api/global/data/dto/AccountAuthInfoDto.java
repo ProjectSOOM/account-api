@@ -1,4 +1,4 @@
-package com.soom.account_api.domain.sign.data.dto;
+package com.soom.account_api.global.data.dto;
 
 public record AccountAuthInfoDto(
         String email,

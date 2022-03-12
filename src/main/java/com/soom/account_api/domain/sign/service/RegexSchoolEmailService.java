@@ -1,6 +1,6 @@
 package com.soom.account_api.domain.sign.service;
 
-import com.soom.account_api.domain.sign.data.type.SchoolType;
+import com.soom.account_api.global.data.type.SchoolType;
 import com.soom.account_api.domain.sign.exception.WrongSchoolEmailException;
 import com.soom.account_api.domain.sign.property.SchoolEmailProperty;
 import lombok.RequiredArgsConstructor;

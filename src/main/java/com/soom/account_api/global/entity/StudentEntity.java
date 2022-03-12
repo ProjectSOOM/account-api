@@ -1,7 +1,8 @@
 package com.soom.account_api.global.entity;
 
-import com.soom.account_api.domain.sign.data.type.DepartmentType;
-import com.soom.account_api.domain.sign.data.type.SchoolType;
+import com.soom.account_api.global.data.type.DepartmentType;
+import com.soom.account_api.global.data.type.SchoolType;
+import com.soom.account_api.global.data.dto.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,5 +30,14 @@ public class StudentEntity extends AccountEntity{
         this.admissionYear = admissionYear;
         this.schoolNumber = schoolNumber;
         this.department = department;
+    }
+
+    @Override
+    public StudentDto toDto() {
+        return new StudentDto(
+                new AccountAuthInfoDto(getEmail(), getEncodedPassword()),
+                new AccountProfileInfoDto(getName(), getBirth(), getSchoolType()),
+                new StudentInfoDto(admissionYear, schoolNumber, department)
+        );
     }
 }

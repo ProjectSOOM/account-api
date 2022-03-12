@@ -1,6 +1,6 @@
-package com.soom.account_api.domain.sign.data.dto;
+package com.soom.account_api.global.data.dto;
 
-import com.soom.account_api.domain.sign.data.type.DepartmentType;
+import com.soom.account_api.global.data.type.DepartmentType;
 
 public record StudentInfoDto(
         Integer admissionYear,

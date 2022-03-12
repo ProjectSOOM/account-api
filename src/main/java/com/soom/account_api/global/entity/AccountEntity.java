@@ -1,7 +1,7 @@
 package com.soom.account_api.global.entity;
 
-import com.soom.account_api.domain.sign.data.type.SchoolType;
-import lombok.AllArgsConstructor;
+import com.soom.account_api.global.data.type.SchoolType;
+import com.soom.account_api.global.data.dto.AccountDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "DTYPE")
+@DiscriminatorColumn
 @Getter @Setter
 @NoArgsConstructor
 public abstract class AccountEntity {
@@ -37,4 +37,6 @@ public abstract class AccountEntity {
         this.birth = birth;
         this.schoolType = schoolType;
     }
+
+    public abstract <T extends AccountDto> T toDto();
 }
