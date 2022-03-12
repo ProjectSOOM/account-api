@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties("teacher-code.jwt")
+@ConfigurationProperties("soom.teacher-code.jwt")
 @RefreshScope
 public class TeacherCodeJwtProperty {
     private String secret;
