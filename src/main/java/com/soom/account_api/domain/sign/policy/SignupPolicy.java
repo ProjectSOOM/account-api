@@ -12,6 +12,5 @@ public interface SignupPolicy {
     boolean checkTeacherCode(String code);
 
     boolean checkStudentAdmissionYear(Integer admissionYear);
-
     boolean checkStudentSchoolNumber(Integer schoolNumber);
 }

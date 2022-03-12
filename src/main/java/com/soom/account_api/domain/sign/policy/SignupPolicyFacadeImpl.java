@@ -23,8 +23,8 @@ public class SignupPolicyFacadeImpl implements SignupPolicyFacade{
     @Override
     public void checkStudentPolicy(StudentSignupInfoDto dto) {
         checkCommonPolicy(dto.authInfo().email(), dto.authInfo().password(), dto.profileInfo().name(), dto.profileInfo().birth());
-        if(!signupPolicy.checkStudentAdmissionYear(dto.studentInfo().admissionYear())) throw new PolicyViolationException(SignupPolicyType.TEACHER_CODE_POLICY);
-        if(!signupPolicy.checkStudentSchoolNumber(dto.studentInfo().schoolNumber())) throw new PolicyViolationException(SignupPolicyType.TEACHER_CODE_POLICY);
+        if(!signupPolicy.checkStudentAdmissionYear(dto.studentInfo().admissionYear())) throw new PolicyViolationException(SignupPolicyType.STUDENT_ADMISSION_YEAR_POLICY);
+        if(!signupPolicy.checkStudentSchoolNumber(dto.studentInfo().schoolNumber())) throw new PolicyViolationException(SignupPolicyType.STUDENT_SCHOOL_NUMBER_POLICY);
     }
 
     private void checkCommonPolicy(String email, String password, String name, LocalDate birth) {

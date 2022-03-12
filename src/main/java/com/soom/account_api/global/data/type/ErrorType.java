@@ -22,6 +22,8 @@ public enum ErrorType {
     EMAIL_POLICY_VIOLATION("email-policy-violation"),
     PASSWORD_POLICY_VIOLATION("password-policy-violation"),
     TEACHER_CODE_POLICY_VIOLATION("teacher-code-policy-violation"),
+    STUDENT_ADMISSION_YEAR_POLICY_VIOLATION("student-admission-policy-violation"),
+    STUDENT_SCHOOL_NUMBER_POLICY_VIOLATION("student-school-number"),
 
     //로그인시
     WRONG_EMAIL("wrong-email"),
