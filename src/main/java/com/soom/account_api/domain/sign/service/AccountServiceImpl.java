@@ -4,8 +4,10 @@ import com.soom.account_api.domain.sign.data.dto.StudentSignupInfoDto;
 import com.soom.account_api.domain.sign.data.dto.TeacherSignupInfoDto;
 import com.soom.account_api.domain.sign.data.dto.WithdrawalInfoDto;
 import com.soom.account_api.domain.sign.data.type.SignupPolicyType;
+import com.soom.account_api.domain.sign.exception.AccountAuthorizeException;
 import com.soom.account_api.domain.sign.exception.PolicyViolationException;
 import com.soom.account_api.domain.sign.policy.SignupPolicy;
+import com.soom.account_api.global.entity.AccountEntity;
 import com.soom.account_api.global.entity.StudentEntity;
 import com.soom.account_api.global.entity.TeacherEntity;
 import com.soom.account_api.global.repository.AccountRepository;
@@ -17,6 +19,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
+import static com.soom.account_api.domain.sign.exception.AccountAuthorizeException.AuthorizeType.EMAIL;
+import static com.soom.account_api.domain.sign.exception.AccountAuthorizeException.AuthorizeType.PASSWORD;
+
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService{
@@ -25,7 +30,6 @@ public class AccountServiceImpl implements AccountService{
     private final StudentRepository studentRepository;
     private final TeacherRepository teacherRepository;
     private final SignupPolicy signupPolicy;
-    private final AccountAuthorizeService accountAuthorizeService;
 
     @Override
     public void signUp(final StudentSignupInfoDto dto) {
@@ -54,8 +58,17 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public void withdrawal(WithdrawalInfoDto dto) {
-        Long id = accountAuthorizeService.authorize(dto.email(), dto.password());
+        Long id = authorize(dto.email(), dto.password());
         accountRepository.deleteById(id);
+    }
+
+    @Override
+    public Long authorize(String email, String password) {
+        final AccountEntity entity = accountRepository.findByEmail(email)
+                .orElseThrow(() -> new AccountAuthorizeException("이메일을 찾을 수 없습니다!", EMAIL, email));
+        if(!passwordEncoder.matches(password, entity.getEncodedPassword()))
+            throw new AccountAuthorizeException("비밀번호가 잘못되었습니다!", PASSWORD, password);
+        return entity.getId();
     }
 
     private void checkPolicy(final TeacherSignupInfoDto dto) {

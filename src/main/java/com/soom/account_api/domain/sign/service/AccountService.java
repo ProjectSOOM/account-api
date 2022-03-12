@@ -9,4 +9,6 @@ public interface AccountService {
     void signUp(TeacherSignupInfoDto dto);
 
     void withdrawal(WithdrawalInfoDto dto);
+
+    Long authorize(String email, String password);
 }
