@@ -9,20 +9,27 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 @Getter
 public enum ErrorType {
-    UNKNOWN_ERROR("unknwon-error"),
+    UNKNOWN_ERROR("unknown-error"),
 
+    //토큰 사용시
     MISSING_JWT_TOKEN("missing-jwt-token"),
     EXPIRED_JWT_TOKEN("expired-jwt-token"),
     WRONG_JWT_TOKEN("wrong-jwt-token"),
 
+    //회원가입시
     BIRTH_POLICY_VIOLATION("birth-policy-violation"),
     NAME_POLICY_VIOLATION("name-policy-violation"),
     EMAIL_POLICY_VIOLATION("email-policy-violation"),
     PASSWORD_POLICY_VIOLATION("password-policy-violation"),
     TEACHER_CODE_POLICY_VIOLATION("teacher-code-policy-violation"),
 
+    //로그인시
     WRONG_EMAIL("wrong-email"),
-    WRONG_PASSWORD("wrong-password")
+    WRONG_PASSWORD("wrong-password"),
+
+    //메일인증시
+    UNKNOWN_AUTHORIZE_CODE("unknown-authorize-code"),
+    UNKNOWN_EMAIL("unknown-email")
     ;
 
     private final String propertyName;

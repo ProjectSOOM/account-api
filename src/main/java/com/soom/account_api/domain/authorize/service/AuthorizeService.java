@@ -12,5 +12,4 @@ public interface AuthorizeService {
     String getEmailByCode(String code);
     String getEmailByToken(String token);
     String getTokenByEmail(String email);
-
 }
