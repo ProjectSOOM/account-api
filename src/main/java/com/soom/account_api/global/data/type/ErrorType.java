@@ -19,7 +19,11 @@ public enum ErrorType {
     NAME_POLICY_VIOLATION("name-policy-violation"),
     EMAIL_POLICY_VIOLATION("email-policy-violation"),
     PASSWORD_POLICY_VIOLATION("password-policy-violation"),
-    TEACHER_CODE_POLICY_VIOLATION("teacher-code-policy-violation");
+    TEACHER_CODE_POLICY_VIOLATION("teacher-code-policy-violation"),
+
+    WRONG_EMAIL("wrong-email"),
+    WRONG_PASSWORD("wrong-password")
+    ;
 
     private final String propertyName;
 
