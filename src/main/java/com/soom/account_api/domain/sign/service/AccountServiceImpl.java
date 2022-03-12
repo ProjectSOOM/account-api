@@ -3,10 +3,8 @@ package com.soom.account_api.domain.sign.service;
 import com.soom.account_api.domain.sign.data.dto.StudentSignupInfoDto;
 import com.soom.account_api.domain.sign.data.dto.TeacherSignupInfoDto;
 import com.soom.account_api.domain.sign.data.dto.WithdrawalInfoDto;
-import com.soom.account_api.domain.sign.data.type.SignupPolicyType;
 import com.soom.account_api.domain.sign.exception.AccountAuthorizeException;
-import com.soom.account_api.domain.sign.exception.PolicyViolationException;
-import com.soom.account_api.domain.sign.policy.SignupPolicy;
+import com.soom.account_api.domain.sign.policy.SignupPolicyFacade;
 import com.soom.account_api.global.entity.AccountEntity;
 import com.soom.account_api.global.entity.StudentEntity;
 import com.soom.account_api.global.entity.TeacherEntity;
@@ -16,8 +14,6 @@ import com.soom.account_api.global.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 
 import static com.soom.account_api.domain.sign.exception.AccountAuthorizeException.AuthorizeType.EMAIL;
 import static com.soom.account_api.domain.sign.exception.AccountAuthorizeException.AuthorizeType.PASSWORD;
@@ -29,11 +25,11 @@ public class AccountServiceImpl implements AccountService{
     private final AccountRepository accountRepository;
     private final StudentRepository studentRepository;
     private final TeacherRepository teacherRepository;
-    private final SignupPolicy signupPolicy;
+    private final SignupPolicyFacade signupPolicyFacade;
 
     @Override
     public void signUp(final StudentSignupInfoDto dto) {
-        checkPolicy(dto);
+        signupPolicyFacade.checkStudentPolicy(dto);
         final String encodedPassword = passwordEncoder.encode(dto.authInfo().password());
         final StudentEntity entity = new StudentEntity(
                 dto.authInfo().email(), encodedPassword, //AuthInfo
@@ -45,7 +41,7 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public void signUp(final TeacherSignupInfoDto dto) {
-        checkPolicy(dto);
+        signupPolicyFacade.checkTeacherPolicy(dto);
         final String encodedPassword = passwordEncoder.encode(dto.authInfo().password());
 
         final TeacherEntity entity = new TeacherEntity(
@@ -69,23 +65,5 @@ public class AccountServiceImpl implements AccountService{
         if(!passwordEncoder.matches(password, entity.getEncodedPassword()))
             throw new AccountAuthorizeException("비밀번호가 잘못되었습니다!", PASSWORD, password);
         return entity.getId();
-    }
-
-    private void checkPolicy(final TeacherSignupInfoDto dto) {
-        checkPolicy(dto.authInfo().email(), dto.authInfo().password(), dto.profileInfo().name(), dto.profileInfo().birth());
-        if(!signupPolicy.checkTeacherCode(dto.teacherInfo().code())) throw new PolicyViolationException(SignupPolicyType.TEACHER_CODE_POLICY);
-    }
-
-    private void checkPolicy(final StudentSignupInfoDto dto) {
-        checkPolicy(dto.authInfo().email(), dto.authInfo().password(), dto.profileInfo().name(), dto.profileInfo().birth());
-        if(!signupPolicy.checkStudentAdmissionYear(dto.studentInfo().admissionYear())) throw new PolicyViolationException(SignupPolicyType.TEACHER_CODE_POLICY);
-        if(!signupPolicy.checkStudentSchoolNumber(dto.studentInfo().schoolNumber())) throw new PolicyViolationException(SignupPolicyType.TEACHER_CODE_POLICY);
-    }
-
-    private void checkPolicy(String email, String password, String name, LocalDate birth) {
-        if(!signupPolicy.checkEmailPolicy(email)) throw new PolicyViolationException(SignupPolicyType.EMAIL_POLICY);
-        if(!signupPolicy.checkPasswordPolicy(password)) throw new PolicyViolationException(SignupPolicyType.PASSWORD_POLICY);
-        if(! signupPolicy.checkNamePolicy(name)) throw new PolicyViolationException(SignupPolicyType.NAME_POLICY);
-        if(!signupPolicy.checkBirthPolicy(birth)) throw new PolicyViolationException(SignupPolicyType.BIRTH_POLICY);
     }
 }
