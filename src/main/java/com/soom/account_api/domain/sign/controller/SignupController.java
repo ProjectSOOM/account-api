@@ -6,12 +6,11 @@ import com.soom.account_api.domain.sign.data.request.TeacherSignupRequest;
 import com.soom.account_api.domain.sign.data.request.WithdrawalRequest;
 import com.soom.account_api.domain.sign.data.response.StudentSignupResponse;
 import com.soom.account_api.domain.sign.data.response.TeacherSignupResponse;
-import com.soom.account_api.domain.sign.data.type.SignupPolicyType;
 import com.soom.account_api.domain.sign.exception.PolicyViolationException;
 import com.soom.account_api.domain.sign.service.AccountService;
 import com.soom.account_api.domain.sign.service.EmailTokenDecodeService;
+import com.soom.account_api.domain.sign.service.SchoolEmailService;
 import com.soom.account_api.global.data.response.ErrorResponse;
-import com.soom.account_api.global.data.type.ErrorType;
 import com.soom.account_api.global.service.ErrorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 public class SignupController {
     private final AccountService accountService;
     private final EmailTokenDecodeService emailTokenDecodeService;
+    private final SchoolEmailService schoolEmailService;
     private final ErrorService errorService;
 
     //학생 회원가입
@@ -66,7 +66,7 @@ public class SignupController {
         final String email = emailTokenDecodeService.decode(request.emailToken());
         return new StudentSignupInfoDto(
                 new AccountAuthInfoDto(email, request.password()),
-                new AccountProfileInfoDto(request.name(), request.birth()),
+                new AccountProfileInfoDto(request.name(), request.birth(), schoolEmailService.getSchoolByEmail(email)),
                 new StudentInfoDto(request.admissionYear(), request.schoolNumber(), request.department())
         );
     }
@@ -75,7 +75,7 @@ public class SignupController {
         final String email = emailTokenDecodeService.decode(request.emailToken());
         return new TeacherSignupInfoDto(
                 new AccountAuthInfoDto(email, request.password()),
-                new AccountProfileInfoDto(request.name(), request.birth()),
+                new AccountProfileInfoDto(request.name(), request.birth(), schoolEmailService.getSchoolByEmail(email)),
                 new TeacherInfoDto(request.code(), request.teacher())
         );
     }

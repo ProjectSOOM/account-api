@@ -34,7 +34,7 @@ public class AccountServiceImpl implements AccountService{
         final String encodedPassword = passwordEncoder.encode(dto.authInfo().password());
         final StudentEntity entity = new StudentEntity(
                 dto.authInfo().email(), encodedPassword, //AuthInfo
-                dto.profileInfo().name(), dto.profileInfo().birth(), //ProfileInfo
+                dto.profileInfo().name(), dto.profileInfo().birth(), dto.profileInfo().school(), //ProfileInfo
                 dto.studentInfo().admissionYear(), dto.studentInfo().schoolNumber(), dto.studentInfo().department() //StudentInfo
         );
         return studentRepository.save(entity).getId();
@@ -46,7 +46,7 @@ public class AccountServiceImpl implements AccountService{
         final String encodedPassword = passwordEncoder.encode(dto.authInfo().password());
         final TeacherEntity entity = new TeacherEntity(
                 dto.authInfo().email(), encodedPassword, //AuthInfo
-                dto.profileInfo().name(), dto.profileInfo().birth(), //ProfileInfo
+                dto.profileInfo().name(), dto.profileInfo().birth(), dto.profileInfo().school(), //ProfileInfo
                 dto.teacherInfo().code(), dto.teacherInfo().teacher() // TeacherInfo
         );
         return teacherRepository.save(entity).getId();

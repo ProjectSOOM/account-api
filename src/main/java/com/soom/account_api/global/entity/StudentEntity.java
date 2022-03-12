@@ -1,6 +1,7 @@
 package com.soom.account_api.global.entity;
 
 import com.soom.account_api.domain.sign.data.type.DepartmentType;
+import com.soom.account_api.domain.sign.data.type.SchoolType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,10 +21,11 @@ public class StudentEntity extends AccountEntity{
                          String encodedPassword,
                          String name,
                          LocalDate birth,
+                         SchoolType schoolType,
                          Integer admissionYear,
                          Integer schoolNumber,
                          DepartmentType department) {
-        super(email, encodedPassword, name, birth);
+        super(email, encodedPassword, name, birth, schoolType);
         this.admissionYear = admissionYear;
         this.schoolNumber = schoolNumber;
         this.department = department;
