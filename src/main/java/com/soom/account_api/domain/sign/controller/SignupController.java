@@ -4,8 +4,13 @@ import com.soom.account_api.domain.sign.data.dto.*;
 import com.soom.account_api.domain.sign.data.request.StudentSignupRequest;
 import com.soom.account_api.domain.sign.data.request.TeacherSignupRequest;
 import com.soom.account_api.domain.sign.data.request.WithdrawalRequest;
+import com.soom.account_api.domain.sign.data.type.SignupPolicyType;
+import com.soom.account_api.domain.sign.exception.PolicyViolationException;
 import com.soom.account_api.domain.sign.service.AccountService;
 import com.soom.account_api.domain.sign.service.EmailTokenDecodeService;
+import com.soom.account_api.global.data.response.ErrorResponse;
+import com.soom.account_api.global.data.type.ErrorType;
+import com.soom.account_api.global.service.ErrorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class SignupController {
     private final AccountService accountService;
     private final EmailTokenDecodeService emailTokenDecodeService;
+    private ErrorService errorService;
 
     //학생 회원가입
     @PostMapping("/student") @Operation(summary = "회원가입 - 학생 회원가입", description = "학생신분으로 회원가입을 진행합니다.")
@@ -42,6 +48,20 @@ public class SignupController {
         final WithdrawalInfoDto dto = getDtoByRequest(request);
         accountService.withdrawal(dto);
         return ResponseEntity.noContent().build();
+    }
+    
+    @ExceptionHandler(PolicyViolationException.class)
+    public ResponseEntity<ErrorResponse> handling(PolicyViolationException e) {
+        return ResponseEntity.badRequest().body(
+                switch ((SignupPolicyType)e.getPolicyType()) {
+                    //TODO 다른방식의 Mapping 생각해보기
+                    case BIRTH_POLICY -> errorService.getErrorResponse(ErrorType.BIRTH_POLICY_VIOLATION);
+                    case NAME_POLICY -> errorService.getErrorResponse(ErrorType.NAME_POLICY_VIOLATION);
+                    case EMAIL_POLICY -> errorService.getErrorResponse(ErrorType.EXPIRED_JWT_TOKEN);
+                    case PASSWORD_POLICY -> errorService.getErrorResponse(ErrorType.PASSWORD_POLICY_VIOLATION);
+                    case TEACHER_CODE_POLICY -> errorService.getErrorResponse(ErrorType.TEACHER_CODE_POLICY_VIOLATION);
+                    default -> errorService.getErrorResponse(ErrorType.UNKNOWN_ERROR);
+                });
     }
 
     private WithdrawalInfoDto getDtoByRequest(WithdrawalRequest request) {

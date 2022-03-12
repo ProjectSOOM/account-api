@@ -4,6 +4,7 @@ import com.soom.account_api.global.data.response.ErrorResponse;
 import com.soom.account_api.global.data.type.ErrorType;
 import com.soom.account_api.global.exception.JwtDecodeException;
 import com.soom.account_api.global.property.ErrorResponseProperty;
+import com.soom.account_api.global.service.ErrorService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @RequiredArgsConstructor
 public class JwtAdvice {
-    private final ErrorResponseProperty errorResponseProperty;
+    private final ErrorService errorService;
 
     //JWT 오류 핸들링
     @ExceptionHandler(JwtDecodeException.class)
@@ -26,17 +27,13 @@ public class JwtAdvice {
 
     private ErrorResponse getErrorResponse(Throwable cause) {
         return switch (cause) {
-            case IllegalArgumentException e -> getErrorResponse(ErrorType.MISSING_JWT_TOKEN);
-            case ExpiredJwtException e -> getErrorResponse(ErrorType.EXPIRED_JWT_TOKEN);
-            case UnsupportedJwtException e -> getErrorResponse(ErrorType.WRONG_JWT_TOKEN);
-            case MalformedJwtException e -> getErrorResponse(ErrorType.WRONG_JWT_TOKEN);
-            case SignatureException e -> getErrorResponse(ErrorType.WRONG_JWT_TOKEN);
-            default -> getErrorResponse(ErrorType.UNKNOWN_ERROR);
+            //TODO 다른방식의 Mapping 생각해보기
+            case IllegalArgumentException e -> errorService.getErrorResponse(ErrorType.MISSING_JWT_TOKEN);
+            case ExpiredJwtException e -> errorService.getErrorResponse(ErrorType.EXPIRED_JWT_TOKEN);
+            case UnsupportedJwtException e -> errorService.getErrorResponse(ErrorType.WRONG_JWT_TOKEN);
+            case MalformedJwtException e -> errorService.getErrorResponse(ErrorType.WRONG_JWT_TOKEN);
+            case SignatureException e -> errorService.getErrorResponse(ErrorType.WRONG_JWT_TOKEN);
+            default -> errorService.getErrorResponse(ErrorType.UNKNOWN_ERROR);
         };
-    }
-
-    //TODO Error 관리서비스 만들어서 거기로 빼내기
-    private ErrorResponse getErrorResponse(ErrorType type) {
-        return errorResponseProperty.getProperties().get(type.getPropertyName());
     }
 }
