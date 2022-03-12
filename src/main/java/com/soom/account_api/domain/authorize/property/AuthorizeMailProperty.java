@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Getter @Setter
 @Configuration
-@ConfigurationProperties("authorize.mail")
+@ConfigurationProperties("soom.authorize.mail")
 @RefreshScope
 public class AuthorizeMailProperty {
     private String title;

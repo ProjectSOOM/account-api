@@ -4,7 +4,6 @@ import com.soom.account_api.domain.authorize.data.dto.AuthInfoDto;
 import com.soom.account_api.domain.authorize.data.request.SendAuthEmailRequest;
 import com.soom.account_api.domain.authorize.data.response.ConfirmAuthEmailResponse;
 import com.soom.account_api.domain.authorize.service.AuthorizeService;
-import com.soom.account_api.global.exception.JwtUtilException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

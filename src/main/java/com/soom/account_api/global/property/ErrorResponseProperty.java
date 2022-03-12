@@ -1,6 +1,6 @@
-package com.soom.account_api.domain.sign.property;
+package com.soom.account_api.global.property;
 
-
+import com.soom.account_api.global.data.response.ErrorResponse;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,11 +9,10 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
 
-@Getter
-@Setter
 @Configuration
-@ConfigurationProperties("soom.school.email")
+@ConfigurationProperties("soom.error")
 @RefreshScope
-public class SchoolEmailProperty {
-    private HashMap<String, String> regex;
+@Getter @Setter
+public class ErrorResponseProperty {
+    HashMap<String, ErrorResponse> properties;
 }

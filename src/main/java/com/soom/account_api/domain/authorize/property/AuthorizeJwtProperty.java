@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties("authorize.jwt")
+@ConfigurationProperties("soom.authorize.jwt")
 @RefreshScope
 public class AuthorizeJwtProperty {
     private String secret;
