@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class SignupController {
     private final AccountService accountService;
     private final EmailTokenDecodeService emailTokenDecodeService;
+
     //학생 회원가입
     @PostMapping("/student") @Operation(summary = "회원가입 - 학생 회원가입", description = "학생신분으로 회원가입을 진행합니다.")
     public ResponseEntity<?> signup(@RequestBody final StudentSignupRequest request) {
@@ -34,6 +35,7 @@ public class SignupController {
         accountService.signup(dto); //TODO 회원가입 완료정보를 반환하도록 수정
         return ResponseEntity.ok(null);
     }
+
     //회원탈퇴
     @DeleteMapping @Operation(summary = "회원탈퇴", description = "회원 탈퇴를 진행합니다.")
     public ResponseEntity<?> withdrawal(@RequestBody final WithdrawalRequest request) {

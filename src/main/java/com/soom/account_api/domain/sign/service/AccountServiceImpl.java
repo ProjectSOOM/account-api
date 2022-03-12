@@ -1,5 +1,6 @@
 package com.soom.account_api.domain.sign.service;
 
+import com.soom.account_api.domain.sign.data.dto.SigninInfoDto;
 import com.soom.account_api.domain.sign.data.dto.StudentSignupInfoDto;
 import com.soom.account_api.domain.sign.data.dto.TeacherSignupInfoDto;
 import com.soom.account_api.domain.sign.data.dto.WithdrawalInfoDto;
@@ -28,7 +29,7 @@ public class AccountServiceImpl implements AccountService{
     private final SignupPolicyFacade signupPolicyFacade;
 
     @Override
-    public void signUp(final StudentSignupInfoDto dto) {
+    public void signup(final StudentSignupInfoDto dto) {
         signupPolicyFacade.checkStudentPolicy(dto);
         final String encodedPassword = passwordEncoder.encode(dto.authInfo().password());
         final StudentEntity entity = new StudentEntity(
@@ -40,7 +41,7 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public void signUp(final TeacherSignupInfoDto dto) {
+    public void signup(final TeacherSignupInfoDto dto) {
         signupPolicyFacade.checkTeacherPolicy(dto);
         final String encodedPassword = passwordEncoder.encode(dto.authInfo().password());
         final TeacherEntity entity = new TeacherEntity(
@@ -53,16 +54,16 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public void withdrawal(WithdrawalInfoDto dto) {
-        Long id = authorize(dto.email(), dto.password());
+        Long id = signin(new SigninInfoDto(dto.email(), dto.password()));
         accountRepository.deleteById(id);
     }
 
     @Override
-    public Long authorize(String email, String password) {
-        final AccountEntity entity = accountRepository.findByEmail(email)
-                .orElseThrow(() -> new AccountAuthorizeException("이메일을 찾을 수 없습니다!", EMAIL, email));
-        if(!passwordEncoder.matches(password, entity.getEncodedPassword()))
-            throw new AccountAuthorizeException("비밀번호가 잘못되었습니다!", PASSWORD, password);
+    public Long signin(SigninInfoDto dto) {
+        final AccountEntity entity = accountRepository.findByEmail(dto.email())
+                .orElseThrow(() -> new AccountAuthorizeException("이메일을 찾을 수 없습니다!", EMAIL, dto.email()));
+        if(!passwordEncoder.matches(dto.password(), entity.getEncodedPassword()))
+            throw new AccountAuthorizeException("비밀번호가 잘못되었습니다!", PASSWORD, dto.password());
         return entity.getId();
     }
 }
