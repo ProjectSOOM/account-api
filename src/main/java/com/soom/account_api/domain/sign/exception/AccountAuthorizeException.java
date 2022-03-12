@@ -1,6 +1,9 @@
 package com.soom.account_api.domain.sign.exception;
 
+import com.soom.account_api.global.Violatable;
+import com.soom.account_api.global.data.type.ErrorType;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
 public class AccountAuthorizeException extends RuntimeException{
@@ -13,7 +16,16 @@ public class AccountAuthorizeException extends RuntimeException{
         this.data = data;
     }
 
-    public enum AuthorizeType {
-        EMAIL, PASSWORD
+    @Getter
+    @RequiredArgsConstructor
+    public enum AuthorizeType implements Violatable {
+        EMAIL(ErrorType.WRONG_EMAIL), PASSWORD(ErrorType.WRONG_PASSWORD);
+
+        private final ErrorType violationError;
+
+        @Override
+        public ErrorType getViolationError() {
+            return violationError;
+        }
     }
 }

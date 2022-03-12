@@ -19,11 +19,6 @@ public class SignAdvice {
     @ExceptionHandler(AccountAuthorizeException.class)
     public ResponseEntity<ErrorResponse> handling(AccountAuthorizeException e) {
         return ResponseEntity.badRequest().body(
-                switch (e.getType()) {
-                    //TODO 다른방식의 Mapping 생각해보기
-                    case EMAIL -> errorService.getErrorResponse(ErrorType.WRONG_EMAIL);
-                    case PASSWORD -> errorService.getErrorResponse(ErrorType.WRONG_PASSWORD);
-                    default -> errorService.getErrorResponse(ErrorType.UNKNOWN_ERROR);
-                });
+                errorService.getErrorResponse(e.getType().getViolationError()));
     }
 }

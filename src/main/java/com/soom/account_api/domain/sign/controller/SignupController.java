@@ -54,18 +54,7 @@ public class SignupController {
 
     @ExceptionHandler(PolicyViolationException.class)
     public ResponseEntity<ErrorResponse> handling(PolicyViolationException e) {
-        return ResponseEntity.badRequest().body(
-                switch ((SignupPolicyType)e.getPolicyType()) {
-                    //TODO 다른방식의 Mapping 생각해보기
-                    case BIRTH_POLICY -> errorService.getErrorResponse(ErrorType.BIRTH_POLICY_VIOLATION);
-                    case NAME_POLICY -> errorService.getErrorResponse(ErrorType.NAME_POLICY_VIOLATION);
-                    case EMAIL_POLICY -> errorService.getErrorResponse(ErrorType.EXPIRED_JWT_TOKEN);
-                    case PASSWORD_POLICY -> errorService.getErrorResponse(ErrorType.PASSWORD_POLICY_VIOLATION);
-                    case TEACHER_CODE_POLICY -> errorService.getErrorResponse(ErrorType.TEACHER_CODE_POLICY_VIOLATION);
-                    case STUDENT_SCHOOL_NUMBER_POLICY -> errorService.getErrorResponse(ErrorType.STUDENT_SCHOOL_NUMBER_POLICY_VIOLATION);
-                    case STUDENT_ADMISSION_YEAR_POLICY -> errorService.getErrorResponse(ErrorType.STUDENT_ADMISSION_YEAR_POLICY_VIOLATION);
-                    default -> errorService.getErrorResponse(ErrorType.UNKNOWN_ERROR);
-                });
+        return ResponseEntity.badRequest().body(errorService.getErrorResponse(e.getPolicyType().getViolationError()));
     }
 
     private WithdrawalInfoDto getDtoByRequest(WithdrawalRequest request) {
