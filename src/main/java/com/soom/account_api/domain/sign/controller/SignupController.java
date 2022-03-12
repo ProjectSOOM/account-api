@@ -4,6 +4,8 @@ import com.soom.account_api.domain.sign.data.dto.*;
 import com.soom.account_api.domain.sign.data.request.StudentSignupRequest;
 import com.soom.account_api.domain.sign.data.request.TeacherSignupRequest;
 import com.soom.account_api.domain.sign.data.request.WithdrawalRequest;
+import com.soom.account_api.domain.sign.data.response.StudentSignupResponse;
+import com.soom.account_api.domain.sign.data.response.TeacherSignupResponse;
 import com.soom.account_api.domain.sign.data.type.SignupPolicyType;
 import com.soom.account_api.domain.sign.exception.PolicyViolationException;
 import com.soom.account_api.domain.sign.service.AccountService;
@@ -24,22 +26,22 @@ import org.springframework.web.bind.annotation.*;
 public class SignupController {
     private final AccountService accountService;
     private final EmailTokenDecodeService emailTokenDecodeService;
-    private ErrorService errorService;
+    private final ErrorService errorService;
 
     //학생 회원가입
     @PostMapping("/student") @Operation(summary = "회원가입 - 학생 회원가입", description = "학생신분으로 회원가입을 진행합니다.")
-    public ResponseEntity<?> signup(@RequestBody final StudentSignupRequest request) {
+    public ResponseEntity<StudentSignupResponse> signup(@RequestBody final StudentSignupRequest request) {
         final StudentSignupInfoDto dto = getDtoByRequest(request);
-        accountService.signup(dto); //TODO 회원가입 완료정보를 반환하도록 수정
-        return ResponseEntity.ok(null);
+        final Long accountId = accountService.signup(dto);
+        return ResponseEntity.ok(new StudentSignupResponse(accountId));
     }
 
     //교사 회원가입
     @PostMapping("/teacher") @Operation(summary = "회원가입 - 교사 회원가입", description = "교사신분으로 회원가입을 진행합니다.")
-    public ResponseEntity<?> signup(@RequestBody final TeacherSignupRequest request) {
+    public ResponseEntity<TeacherSignupResponse> signup(@RequestBody final TeacherSignupRequest request) {
         final TeacherSignupInfoDto dto = getDtoByRequest(request);
-        accountService.signup(dto); //TODO 회원가입 완료정보를 반환하도록 수정
-        return ResponseEntity.ok(null);
+        final Long accountId = accountService.signup(dto);
+        return ResponseEntity.ok(new TeacherSignupResponse(accountId));
     }
 
     //회원탈퇴

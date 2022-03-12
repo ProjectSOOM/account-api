@@ -29,7 +29,7 @@ public class AccountServiceImpl implements AccountService{
     private final SignupPolicyFacade signupPolicyFacade;
 
     @Override
-    public void signup(final StudentSignupInfoDto dto) {
+    public Long signup(final StudentSignupInfoDto dto) {
         signupPolicyFacade.checkStudentPolicy(dto);
         final String encodedPassword = passwordEncoder.encode(dto.authInfo().password());
         final StudentEntity entity = new StudentEntity(
@@ -37,11 +37,11 @@ public class AccountServiceImpl implements AccountService{
                 dto.profileInfo().name(), dto.profileInfo().birth(), //ProfileInfo
                 dto.studentInfo().admissionYear(), dto.studentInfo().schoolNumber(), dto.studentInfo().department() //StudentInfo
         );
-        studentRepository.save(entity);
+        return studentRepository.save(entity).getId();
     }
 
     @Override
-    public void signup(final TeacherSignupInfoDto dto) {
+    public Long signup(final TeacherSignupInfoDto dto) {
         signupPolicyFacade.checkTeacherPolicy(dto);
         final String encodedPassword = passwordEncoder.encode(dto.authInfo().password());
         final TeacherEntity entity = new TeacherEntity(
@@ -49,7 +49,7 @@ public class AccountServiceImpl implements AccountService{
                 dto.profileInfo().name(), dto.profileInfo().birth(), //ProfileInfo
                 dto.teacherInfo().code(), dto.teacherInfo().teacher() // TeacherInfo
         );
-        teacherRepository.save(entity);
+        return teacherRepository.save(entity).getId();
     }
 
     @Override

@@ -6,8 +6,8 @@ import com.soom.account_api.domain.sign.data.dto.TeacherSignupInfoDto;
 import com.soom.account_api.domain.sign.data.dto.WithdrawalInfoDto;
 
 public interface AccountService {
-    void signup(StudentSignupInfoDto dto);
-    void signup(TeacherSignupInfoDto dto);
+    Long signup(StudentSignupInfoDto dto);
+    Long signup(TeacherSignupInfoDto dto);
 
     void withdrawal(WithdrawalInfoDto dto);
 
