@@ -1,6 +1,7 @@
 package com.soom.account_api.domain.sign.property;
 
 
+import com.soom.account_api.domain.sign.data.type.SchoolType;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,5 +16,5 @@ import java.util.HashMap;
 @ConfigurationProperties("soom.school.email")
 @RefreshScope
 public class SchoolEmailProperty {
-    private HashMap<String, String> regex;
+    private HashMap<SchoolType, String> regex;
 }

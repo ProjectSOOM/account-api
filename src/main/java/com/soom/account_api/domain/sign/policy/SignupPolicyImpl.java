@@ -1,6 +1,6 @@
 package com.soom.account_api.domain.sign.policy;
 
-import com.soom.account_api.domain.sign.service.SchoolEmailValidService;
+import com.soom.account_api.domain.sign.service.SchoolEmailService;
 import com.soom.account_api.domain.sign.service.TeacherCodeValidService;
 import com.soom.account_api.global.repository.AccountRepository;
 import com.soom.account_api.global.repository.StudentRepository;
@@ -14,12 +14,12 @@ import java.time.LocalDate;
 public class SignupPolicyImpl implements SignupPolicy {
     private final AccountRepository accountRepository;
     private final StudentRepository studentRepository;
-    private final SchoolEmailValidService schoolEmailValidService;
+    private final SchoolEmailService schoolEmailService;
     private final TeacherCodeValidService teacherCodeValidService;
 
     @Override
     public boolean checkEmailPolicy(final String email) {
-        return schoolEmailValidService.isSchoolEmail(email) //학교이메일이어야하며.
+        return schoolEmailService.isSchoolEmail(email) //학교이메일이어야하며.
                 && !accountRepository.existsByEmail(email); //기존에 사용하지 않았던 이메일이어야한다.
     }
 
