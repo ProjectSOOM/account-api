@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v2/account/signin")
 @RequiredArgsConstructor
 public class SigninController {
-    AccountService accountService;
-    LoginTokenService loginTokenService;
+    private final AccountService accountService;
+    private final LoginTokenService loginTokenService;
 
     //로그인 토큰 발급
     @PostMapping@Operation(summary = "로그인 - 로그인 토큰 발급", description = "이메일과 비밀번호를 통해 로그인 토큰을 발급합니다.")
@@ -37,7 +37,7 @@ public class SigninController {
     @PostMapping("/refresh") @Operation(summary = "로그인 - 로그인 토큰 재발급", description = "재발급 토큰을 통해 로그인 토큰을 발급합니다.")
     public ResponseEntity<LoginToken> refreshLogin(@RequestBody final RefreshLoginRequest request) {
         //재발급 토큰을 해석하여, 계정의 id를 가져온다.
-        final Long accountId = loginTokenService.getIdByRefreshToken(request.refreshToken());
+        final Long accountId = loginTokenService.id(request.refreshToken());
         //가져온 id를 통해 로그인 토큰을 발급한다.
         final LoginToken response = loginTokenService.token(accountId);
         return ResponseEntity.ok(response);
