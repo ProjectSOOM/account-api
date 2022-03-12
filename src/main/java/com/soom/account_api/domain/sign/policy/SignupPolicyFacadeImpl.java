@@ -30,7 +30,7 @@ public class SignupPolicyFacadeImpl implements SignupPolicyFacade{
     private void checkCommonPolicy(String email, String password, String name, LocalDate birth) {
         if(!signupPolicy.checkEmailPolicy(email)) throw new PolicyViolationException(SignupPolicyType.EMAIL_POLICY);
         if(!signupPolicy.checkPasswordPolicy(password)) throw new PolicyViolationException(SignupPolicyType.PASSWORD_POLICY);
-        if(! signupPolicy.checkNamePolicy(name)) throw new PolicyViolationException(SignupPolicyType.NAME_POLICY);
+        if(!signupPolicy.checkNamePolicy(name)) throw new PolicyViolationException(SignupPolicyType.NAME_POLICY);
         if(!signupPolicy.checkBirthPolicy(birth)) throw new PolicyViolationException(SignupPolicyType.BIRTH_POLICY);
     }
 }

@@ -43,7 +43,6 @@ public class AccountServiceImpl implements AccountService{
     public void signUp(final TeacherSignupInfoDto dto) {
         signupPolicyFacade.checkTeacherPolicy(dto);
         final String encodedPassword = passwordEncoder.encode(dto.authInfo().password());
-
         final TeacherEntity entity = new TeacherEntity(
                 dto.authInfo().email(), encodedPassword, //AuthInfo
                 dto.profileInfo().name(), dto.profileInfo().birth(), //ProfileInfo
