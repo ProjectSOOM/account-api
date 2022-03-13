@@ -1,10 +1,9 @@
 package com.soom.account_api.global.jwt.util;
 
+import com.soom.account_api.global.error.data.type.ErrorType;
 import com.soom.account_api.global.jwt.exception.JwtDecodeException;
 import com.soom.account_api.global.jwt.exception.JwtEncodeException;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -25,7 +24,7 @@ public class JwtUtil {
                     .signWith(ALGORITHM, secret)
                     .compact();
         } catch (Exception e) {
-            throw new JwtEncodeException(e);
+            throw new JwtDecodeException(e, ErrorType.UNKNOWN_ERROR);
         }
     }
 
@@ -35,8 +34,16 @@ public class JwtUtil {
                     .setSigningKey(secret)
                     .parseClaimsJws(token)
                     .getBody();
+        } catch (IllegalArgumentException e) {
+            throw new JwtDecodeException(e, ErrorType.MISSING_JWT_TOKEN);
+        } catch (ExpiredJwtException e) {
+            throw new JwtDecodeException(e, ErrorType.EXPIRED_JWT_TOKEN);
+        } catch (UnsupportedJwtException
+                | MalformedJwtException
+                | SignatureException e) {
+            throw new JwtDecodeException(e, ErrorType.WRONG_JWT_TOKEN);
         } catch (Exception e) {
-            throw new JwtDecodeException(e);
+            throw new JwtDecodeException(e, ErrorType.UNKNOWN_ERROR);
         }
     }
 }

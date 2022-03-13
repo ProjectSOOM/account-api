@@ -1,7 +1,9 @@
 package com.soom.account_api.global.jwt.exception;
 
+import com.soom.account_api.global.error.data.type.ErrorType;
+
 public class JwtEncodeException extends JwtUtilException {
-    public JwtEncodeException(Exception e) {
-        super("jwt 토큰을 디코딩하는 중 오류가 발생하였습니다!", e/*, errorType*/);
+    public JwtEncodeException(Exception e, ErrorType error) {
+        super(error, "jwt 토큰을 디코딩하는 중 오류가 발생하였습니다!", e);
     }
 }

@@ -36,7 +36,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (JwtDecodeException e) {
-            sendErrorResponse(HttpStatus.BAD_REQUEST, getErrorType(e.getCause()), response);
+            sendErrorResponse(HttpStatus.BAD_REQUEST, e.getErrorType(), response);
 
         } catch (UnknownAccountException e) {
             sendErrorResponse(HttpStatus.BAD_REQUEST, ErrorType.UNKNOWN_ACCOUNT, response);
@@ -63,17 +63,5 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
             e.printStackTrace();
         }
         return property.getFatalMessage();
-    }
-
-    private ErrorType getErrorType(Throwable cause) {
-        return switch (cause) {
-            //TODO 다른방식의 Mapping 생각해보기
-            case IllegalArgumentException e -> ErrorType.MISSING_JWT_TOKEN;
-            case ExpiredJwtException e -> ErrorType.EXPIRED_JWT_TOKEN;
-            case UnsupportedJwtException e -> ErrorType.WRONG_JWT_TOKEN;
-            case MalformedJwtException e -> ErrorType.WRONG_JWT_TOKEN;
-            case SignatureException e -> ErrorType.WRONG_JWT_TOKEN;
-            default -> ErrorType.UNKNOWN_ERROR;
-        };
     }
 }

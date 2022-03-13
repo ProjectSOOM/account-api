@@ -21,18 +21,8 @@ public class JwtAdvice {
     //JWT 오류 핸들링
     @ExceptionHandler(JwtDecodeException.class)
     public ResponseEntity<ErrorResponse> handling(JwtDecodeException e) {
-        return ResponseEntity.badRequest().body(getErrorResponse(e.getCause()));
-    }
-
-    private ErrorResponse getErrorResponse(Throwable cause) {
-        return switch (cause) {
-            //TODO 다른방식의 Mapping 생각해보기
-            case IllegalArgumentException e -> errorService.getErrorResponse(ErrorType.MISSING_JWT_TOKEN);
-            case ExpiredJwtException e -> errorService.getErrorResponse(ErrorType.EXPIRED_JWT_TOKEN);
-            case UnsupportedJwtException e -> errorService.getErrorResponse(ErrorType.WRONG_JWT_TOKEN);
-            case MalformedJwtException e -> errorService.getErrorResponse(ErrorType.WRONG_JWT_TOKEN);
-            case SignatureException e -> errorService.getErrorResponse(ErrorType.WRONG_JWT_TOKEN);
-            default -> errorService.getErrorResponse(ErrorType.UNKNOWN_ERROR);
-        };
+        return ResponseEntity
+                .badRequest()
+                .body(errorService.getErrorResponse(e.getErrorType()));
     }
 }
