@@ -19,7 +19,7 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticateFilter extends OncePerRequestFilter {
-    private static final String TOKEN_PREFIX = "Bearer "; //TODO 띄어쓰기떄문이아니라 index 떄문에 substring에 +1 한거아닐까?
+    private static final String TOKEN_PREFIX = "Bearer ";
 
     private final UserDetailsService userDetailsService;
     private final LoginTokenService loginTokenService;
@@ -35,14 +35,17 @@ public class JwtAuthenticateFilter extends OncePerRequestFilter {
         final String token = getToken(header); //token을 초기화한다 (logic 상의 Null-safe 보장)
         final String id = getId(token); //id를 초기화한다 (logic 상의 Null-safe 보장)
 
-        System.out.println(token);
-        System.out.println(id);
-
-        //Security COntext 에 인증된 객체가 없을경우
-        if(SecurityContextHolder.getContext().getAuthentication() == null)
+        //Security Context 에 인증된 객체가 없을경우
+        if(SecurityContextHolder.getContext().getAuthentication() == null) {
             //인증객체를 생성하여 Context에 저장한다
-            saveToContext(userDetailsService.loadUserByUsername(id), request);
-
+            //saveToContext(userDetailsService.loadUserByUsername(id), request);
+            final UserDetails userDetails = userDetailsService.loadUserByUsername(id);
+            final UsernamePasswordAuthenticationToken authToken =
+                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authToken);
+        }
+        filterChain.doFilter(request, response);
     }
 
     private void saveToContext(UserDetails userDetails, HttpServletRequest request) {

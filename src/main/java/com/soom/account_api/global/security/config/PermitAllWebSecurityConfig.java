@@ -22,14 +22,15 @@ public class PermitAllWebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http //정책 초기화
                 .cors().disable()
-                .csrf().disable();
-        http //RequestMapping 초기화
+                .csrf().disable()
+                //Stateless 적용
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                //RequestMapping 초기화
                 .authorizeRequests()
                 .antMatchers(HttpMethod.PUT, "/api/v2/account/profile/**").hasRole(CommonPermissionType.USER.getPermission())
                 .anyRequest().permitAll();
-        http //Stateless 적용
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtAuthenticateFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
