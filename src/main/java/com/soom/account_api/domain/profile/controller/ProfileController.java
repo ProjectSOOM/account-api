@@ -41,7 +41,7 @@ public class ProfileController {
     @PutMapping @Operation(summary = "계정 - 일반 프로필 수정", description = "이름, 생년월일등의 일반 프로필 정보를 수정합니다.")
     public ResponseEntity<?> updateProfile(@RequestBody final UpdateProfileRequest request) {
         //현재 로그인된 유저의 accountId를 가져온다.
-        final Long accountId = signinUserService.getSigninUserId(); //TODO Interceptor 를 사용해서 해결할 수 있지않을까?
+        final Long accountId = signinUserService.getSigninUserId();
         //아이디를와 프로필 정보를 통해 해당 계정의 프로필 정보를 수정한다.
         final AccountDto dto = profileService.updateById(accountId, getDtoByRequest(request));
         //수정된 프로필을 반환한다.

@@ -14,5 +14,6 @@ import java.util.HashMap;
 @RefreshScope
 @Getter @Setter
 public class ErrorResponseProperty {
-    HashMap<String, ErrorResponse> properties;
+    private HashMap<String, ErrorResponse> properties;
+    private String fatalMessage;
 }

@@ -1,6 +1,7 @@
 package com.soom.account_api.global.security.config;
 
 import com.soom.account_api.global.account.data.type.CommonPermissionType;
+import com.soom.account_api.global.error.filter.ExceptionHandlerFilter;
 import com.soom.account_api.global.security.filter.JwtAuthenticateFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class PermitAllWebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticateFilter jwtAuthenticateFilter;
+    private final ExceptionHandlerFilter exceptionHandlerFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -31,7 +33,8 @@ public class PermitAllWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.PUT, "/api/v2/account/profile/**").hasRole(CommonPermissionType.USER.getPermission())
                 .anyRequest().permitAll();
-        http.addFilterBefore(jwtAuthenticateFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticateFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(exceptionHandlerFilter, JwtAuthenticateFilter.class);
     }
 
     @Bean

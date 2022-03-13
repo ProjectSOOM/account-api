@@ -1,7 +1,14 @@
 package com.soom.account_api.global.jwt.exception;
 
+import com.soom.account_api.global.error.data.type.ErrorType;
+import lombok.Getter;
+
+//@Getter
 public class JwtUtilException extends RuntimeException {
-    public JwtUtilException(String message, Throwable cause) {
+    //private final ErrorType errorType;
+
+    public JwtUtilException(String message, Throwable cause/*, ErrorType errorType*/) {
         super(message, cause);
+        //this.errorType = errorType;
     }
 }
