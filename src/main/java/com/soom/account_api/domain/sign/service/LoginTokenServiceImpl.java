@@ -24,7 +24,7 @@ public class LoginTokenServiceImpl implements LoginTokenService {
     }
 
     @Override
-    public Long id(final String refreshToken) {
-        return JwtUtil.decode(loginTokenJwtProperty.getSecret(), refreshToken).get("id", Long.class);
+    public Long id(final String token) {
+        return JwtUtil.decode(loginTokenJwtProperty.getSecret(), token).get("id", Long.class);
     }
 }

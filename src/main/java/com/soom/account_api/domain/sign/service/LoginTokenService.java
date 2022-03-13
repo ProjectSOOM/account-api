@@ -5,5 +5,5 @@ import com.soom.account_api.domain.sign.data.response.LoginToken;
 public interface LoginTokenService {
     LoginToken token(Long accountId);
 
-    Long id(String refreshToken);
+    Long id(String token);
 }

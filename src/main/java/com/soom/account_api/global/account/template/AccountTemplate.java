@@ -14,5 +14,7 @@ public interface AccountTemplate {
 
     <T extends AccountEntity, R> R doByIdTemplate(Long accountId, JpaRepository<T, Long> repository, Function<T, R> callback);
 
+    <R> R doByIdTemplate(Long accountId, Function<AccountEntity, R> callback, boolean save);
+
     <T extends AccountEntity, R> R doByIdTemplate(Long accountId, JpaRepository<T, Long> repository, Function<T, R> callback, boolean save);
 }

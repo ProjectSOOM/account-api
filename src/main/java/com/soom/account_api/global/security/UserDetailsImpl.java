@@ -10,17 +10,20 @@ import java.util.Collection;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Getter
 public class UserDetailsImpl implements UserDetails {
     private final String password;
-    private final String username;
+    private final String id;
     private final List<String> roles;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream()
                 .map(SimpleGrantedAuthority::new)
                 .toList();
     }
+
+    @Override public String getPassword() {return password;}
+    @Override public String getUsername() {return id;}
 
     @Override public boolean isAccountNonExpired() {return true;}
     @Override public boolean isAccountNonLocked() {return true;}

@@ -33,6 +33,11 @@ public class AccountTemplateImpl implements AccountTemplate {
     }
 
     @Override
+    public <R> R doByIdTemplate(Long accountId, Function<AccountEntity, R> callback, boolean save) {
+        return doByIdTemplate(accountId, accountRepository, callback, save);
+    }
+
+    @Override
     public <T extends AccountEntity, R> R doByIdTemplate(Long accountId, JpaRepository<T, Long> repository, Function<T, R> callback, boolean save) {
         final T entity = repository
                 .findById(accountId)
