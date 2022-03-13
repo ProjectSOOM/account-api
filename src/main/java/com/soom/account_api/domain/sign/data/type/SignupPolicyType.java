@@ -1,6 +1,6 @@
 package com.soom.account_api.domain.sign.data.type;
 
-import com.soom.account_api.global.PolicyType;
+import com.soom.account_api.global.account.data.PolicyType;
 import com.soom.account_api.global.error.data.type.ErrorType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.soom.account_api.domain.profile.template;
+package com.soom.account_api.global.account.template;
 
 import com.soom.account_api.domain.profile.exception.UnknownAccountException;
 import com.soom.account_api.global.account.data.dto.AccountDto;
@@ -9,10 +9,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 @Component
 @RequiredArgsConstructor
-public class ProfileTemplateImpl implements ProfileTemplate{
+public class AccountTemplateImpl implements AccountTemplate {
     private final AccountRepository accountRepository;
 
     public  <T extends AccountEntity> AccountDto doByIdTemplate(Long accountId, JpaRepository<T, Long> repository, Consumer<T> callback) {
@@ -20,11 +21,24 @@ public class ProfileTemplateImpl implements ProfileTemplate{
     }
 
     public <T extends AccountEntity> AccountDto doByIdTemplate(Long accountId, JpaRepository<T, Long> repository, Consumer<T> callback, boolean save) {
+        return doByIdTemplate(accountId, repository, entity -> {
+            callback.accept(entity);
+            return entity.toDto();
+        }, save);
+    }
+
+    @Override
+    public <T extends AccountEntity, R> R doByIdTemplate(Long accountId, JpaRepository<T, Long> repository, Function<T, R> callback) {
+        return doByIdTemplate(accountId, repository, callback, true);
+    }
+
+    @Override
+    public <T extends AccountEntity, R> R doByIdTemplate(Long accountId, JpaRepository<T, Long> repository, Function<T, R> callback, boolean save) {
         final T entity = repository
                 .findById(accountId)
                 .orElseThrow(() -> new UnknownAccountException(accountId));
-        callback.accept(entity);
+        R result = callback.apply(entity);
         if(save) accountRepository.save(entity);
-        return entity.toDto();
+        return result;
     }
 }

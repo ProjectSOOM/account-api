@@ -14,6 +14,8 @@ import com.soom.account_api.global.account.data.dto.AccountAuthInfoDto;
 import com.soom.account_api.global.account.data.dto.AccountProfileInfoDto;
 import com.soom.account_api.global.account.data.dto.StudentInfoDto;
 import com.soom.account_api.global.account.data.dto.TeacherInfoDto;
+import com.soom.account_api.global.account.data.type.CommonPermissionType;
+import com.soom.account_api.global.account.service.PermissionService;
 import com.soom.account_api.global.error.data.response.ErrorResponse;
 import com.soom.account_api.global.error.service.ErrorService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,6 +23,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static com.soom.account_api.global.account.data.type.CommonPermissionType.MANAGER;
+import static com.soom.account_api.global.account.data.type.CommonPermissionType.USER;
 
 @RestController
 @Tag(name = "회원가입 API", description = "회원가입 및 회원탈퇴기능을 제공하는 API 입니다.")
@@ -31,12 +36,14 @@ public class SignupController {
     private final EmailTokenDecodeService emailTokenDecodeService;
     private final SchoolEmailService schoolEmailService;
     private final ErrorService errorService;
+    private final PermissionService permissionService;
 
     //학생 회원가입
     @PostMapping("/student") @Operation(summary = "회원가입 - 학생 회원가입", description = "학생신분으로 회원가입을 진행합니다.")
     public ResponseEntity<StudentSignupResponse> signup(@RequestBody final StudentSignupRequest request) {
         final StudentSignupInfoDto dto = getDtoByRequest(request);
         final Long accountId = accountService.signup(dto);
+        permissionService.addPermission(accountId, USER); //TODO 나중에 로직분리 생각해보기
         return ResponseEntity.ok(new StudentSignupResponse(accountId));
     }
 
@@ -45,6 +52,7 @@ public class SignupController {
     public ResponseEntity<TeacherSignupResponse> signup(@RequestBody final TeacherSignupRequest request) {
         final TeacherSignupInfoDto dto = getDtoByRequest(request);
         final Long accountId = accountService.signup(dto);
+        permissionService.addPermission(accountId, USER, MANAGER); //TODO 나중에 로직분리 생각해보기
         return ResponseEntity.ok(new TeacherSignupResponse(accountId));
     }
 

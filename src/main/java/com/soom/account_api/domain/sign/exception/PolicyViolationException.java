@@ -1,6 +1,6 @@
 package com.soom.account_api.domain.sign.exception;
 
-import com.soom.account_api.global.PolicyType;
+import com.soom.account_api.global.account.data.PolicyType;
 import lombok.Getter;
 
 @Getter
