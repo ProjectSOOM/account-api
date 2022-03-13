@@ -1,6 +1,6 @@
 package com.soom.account_api.domain.profile.data.dto;
 
-import com.soom.account_api.global.data.type.DepartmentType;
+import com.soom.account_api.global.account.data.type.DepartmentType;
 
 public record UpdateStudentProfileInfoDto (
         Integer admissionYear,

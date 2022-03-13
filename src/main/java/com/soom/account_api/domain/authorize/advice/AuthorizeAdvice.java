@@ -1,9 +1,9 @@
 package com.soom.account_api.domain.authorize.advice;
 
 import com.soom.account_api.domain.authorize.exception.UnknownCodeException;
-import com.soom.account_api.global.data.response.ErrorResponse;
-import com.soom.account_api.global.data.type.ErrorType;
-import com.soom.account_api.global.service.ErrorService;
+import com.soom.account_api.global.error.data.response.ErrorResponse;
+import com.soom.account_api.global.error.data.type.ErrorType;
+import com.soom.account_api.global.error.service.ErrorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailSendException;

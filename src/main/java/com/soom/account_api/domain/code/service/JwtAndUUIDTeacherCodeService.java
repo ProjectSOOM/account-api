@@ -1,11 +1,10 @@
 package com.soom.account_api.domain.code.service;
 
 import com.soom.account_api.domain.code.property.TeacherCodeJwtProperty;
-import com.soom.account_api.global.util.JwtUtil;
+import com.soom.account_api.global.jwt.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;

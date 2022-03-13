@@ -1,7 +1,7 @@
 package com.soom.account_api.domain.sign.data.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.soom.account_api.global.data.type.TeacherType;
+import com.soom.account_api.global.account.data.type.TeacherType;
 
 import java.time.LocalDate;
 

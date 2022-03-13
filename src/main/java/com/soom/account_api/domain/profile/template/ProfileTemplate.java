@@ -1,7 +1,7 @@
 package com.soom.account_api.domain.profile.template;
 
-import com.soom.account_api.global.data.dto.AccountDto;
-import com.soom.account_api.global.entity.AccountEntity;
+import com.soom.account_api.global.account.data.dto.AccountDto;
+import com.soom.account_api.global.account.data.entity.AccountEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.function.Consumer;

@@ -2,8 +2,8 @@ package com.soom.account_api.domain.sign.policy;
 
 import com.soom.account_api.domain.sign.service.SchoolEmailService;
 import com.soom.account_api.domain.sign.service.TeacherCodeValidService;
-import com.soom.account_api.global.repository.AccountRepository;
-import com.soom.account_api.global.repository.StudentRepository;
+import com.soom.account_api.global.account.repository.AccountRepository;
+import com.soom.account_api.global.account.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -8,10 +8,10 @@ import com.soom.account_api.domain.profile.data.request.UpdateStudentProfileRequ
 import com.soom.account_api.domain.profile.data.request.UpdateTeacherProfileRequest;
 import com.soom.account_api.domain.profile.data.response.GetProfileResponse;
 import com.soom.account_api.domain.profile.service.ProfileService;
-import com.soom.account_api.global.data.dto.AccountDto;
-import com.soom.account_api.global.data.dto.StudentDto;
-import com.soom.account_api.global.data.dto.TeacherDto;
-import com.soom.account_api.global.data.type.AccountType;
+import com.soom.account_api.global.account.data.dto.AccountDto;
+import com.soom.account_api.global.account.data.dto.StudentDto;
+import com.soom.account_api.global.account.data.dto.TeacherDto;
+import com.soom.account_api.global.account.data.type.AccountType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -3,7 +3,7 @@ package com.soom.account_api.domain.profile.service;
 import com.soom.account_api.domain.profile.data.dto.UpdateProfileInfoDto;
 import com.soom.account_api.domain.profile.data.dto.UpdateStudentProfileInfoDto;
 import com.soom.account_api.domain.profile.data.dto.UpdateTeacherProfileInfoDto;
-import com.soom.account_api.global.data.dto.AccountDto;
+import com.soom.account_api.global.account.data.dto.AccountDto;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -2,7 +2,7 @@ package com.soom.account_api.domain.sign.service;
 
 import com.soom.account_api.domain.sign.data.response.LoginToken;
 import com.soom.account_api.domain.sign.property.LoginTokenJwtProperty;
-import com.soom.account_api.global.util.JwtUtil;
+import com.soom.account_api.global.jwt.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
