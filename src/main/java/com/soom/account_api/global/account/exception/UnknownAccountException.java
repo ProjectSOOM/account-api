@@ -1,4 +1,4 @@
-package com.soom.account_api.domain.profile.exception;
+package com.soom.account_api.global.account.exception;
 
 public class UnknownAccountException extends RuntimeException {
     public UnknownAccountException(Long accountId) {

@@ -31,8 +31,10 @@ public enum ErrorType {
 
     //메일인증시
     UNKNOWN_AUTHORIZE_CODE("unknown-authorize-code"),
-    UNKNOWN_EMAIL("unknown-email")
-    ;
+    UNKNOWN_EMAIL("unknown-email"),
+
+    //계정접근시
+    UNKNOWN_ACCOUNT("unknown-account");
 
     private final String propertyName;
 

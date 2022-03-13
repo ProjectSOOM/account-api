@@ -1,8 +1,8 @@
 package com.soom.account_api.global.account.template;
 
-import com.soom.account_api.domain.profile.exception.UnknownAccountException;
 import com.soom.account_api.global.account.data.dto.AccountDto;
 import com.soom.account_api.global.account.data.entity.AccountEntity;
+import com.soom.account_api.global.account.exception.UnknownAccountException;
 import com.soom.account_api.global.account.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
