@@ -84,10 +84,8 @@ public class ProfileController {
     }
 
     private GetProfileResponse getResponseByDto(AccountDto dto) {
-        return switch (dto) {
-            case StudentDto student -> new GetProfileResponse(AccountType.STUDENT, student, null);
-            case TeacherDto teacher -> new GetProfileResponse(AccountType.TEACHER, null, teacher);
-            default -> throw new IllegalStateException("Unexpected value: " + dto); //Internal Server Error : 로직이 동기화되지 않았을경우
-        };
+        if(dto instanceof StudentDto) return new GetProfileResponse(AccountType.STUDENT, (StudentDto) dto, null);
+        if(dto instanceof TeacherDto) return new GetProfileResponse(AccountType.TEACHER, null, (TeacherDto) dto);
+        throw new IllegalStateException("Unexpected value: " + dto); //Internal Server Error : 로직이 동기화되지 않았을경우
     }
 }
