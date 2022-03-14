@@ -1,6 +1,6 @@
 package com.soom.account_api.global.security.filter;
 
-import com.soom.account_api.domain.sign.service.LoginTokenService;
+import com.soom.account_api.global.security.service.LoginTokenDecodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,7 +22,7 @@ public class JwtAuthenticateFilter extends OncePerRequestFilter {
     private static final String TOKEN_PREFIX = "Bearer ";
 
     private final UserDetailsService userDetailsService;
-    private final LoginTokenService loginTokenService;
+    private final LoginTokenDecodeService loginTokenService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
