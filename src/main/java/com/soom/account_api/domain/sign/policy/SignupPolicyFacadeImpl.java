@@ -3,7 +3,7 @@ package com.soom.account_api.domain.sign.policy;
 import com.soom.account_api.domain.sign.data.dto.StudentSignupInfoDto;
 import com.soom.account_api.domain.sign.data.dto.TeacherSignupInfoDto;
 import com.soom.account_api.domain.sign.data.type.SignupPolicyType;
-import com.soom.account_api.domain.sign.exception.PolicyViolationException;
+import com.soom.account_api.global.account.exception.PolicyViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

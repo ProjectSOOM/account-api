@@ -3,7 +3,7 @@ package com.soom.account_api.domain.sign.controller;
 import com.soom.account_api.domain.sign.data.request.CheckPasswordRequest;
 import com.soom.account_api.domain.sign.data.request.CheckTeacherCodeRequest;
 import com.soom.account_api.domain.sign.data.type.SignupPolicyType;
-import com.soom.account_api.domain.sign.exception.PolicyViolationException;
+import com.soom.account_api.global.account.exception.PolicyViolationException;
 import com.soom.account_api.domain.sign.policy.SignupPolicy;
 import com.soom.account_api.global.error.data.response.ErrorResponse;
 import com.soom.account_api.global.error.service.ErrorService;
