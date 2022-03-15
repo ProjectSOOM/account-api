@@ -28,8 +28,20 @@ public class ProfileController {
     private final SigninUserService signinUserService;
 
     //계정 프로필 조회
-    @GetMapping("/{accountId}") @Operation(summary = "계정 - 프로필 조회", description = "이메일 주소를 받아, 해당 주소로 인증코드를 담은 메일을 발송합니다.")
+    @GetMapping("/{accountId}") @Operation(summary = "계정 - 프로필 조회", description = "계정 id를 통해서 해당 계정의 프로필을 조회합니다.")
     public ResponseEntity<GetProfileResponse> getProfile(@PathVariable final Long accountId) {
+        //아이디를 통해 계정정보를 가져온다
+        final AccountDto dto = profileService.getById(accountId);
+        //계정정보를 응답객체로 치환하여 반환한다.
+        final GetProfileResponse response = getResponseByDto(dto);
+        return ResponseEntity.ok(response);
+    }
+
+    //계정 프로필 조회
+    @GetMapping @Operation(summary = "계정 - 프로필 조회", description = "로그인 토큰을 통해서 해당 계정의 프로필을 조회합니다.")
+    public ResponseEntity<GetProfileResponse> getProfile() {
+        //현재 로그인된 유저의 accountId를 가져온다.
+        final Long accountId = signinUserService.getSigninUserId();
         //아이디를 통해 계정정보를 가져온다
         final AccountDto dto = profileService.getById(accountId);
         //계정정보를 응답객체로 치환하여 반환한다.
