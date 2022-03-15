@@ -1,4 +1,4 @@
-package com.soom.account_api.domain.sign.exception;
+package com.soom.account_api.global.account.exception;
 
 import lombok.Getter;
 

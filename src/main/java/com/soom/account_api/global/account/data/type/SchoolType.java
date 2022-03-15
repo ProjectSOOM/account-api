@@ -1,7 +1,7 @@
 package com.soom.account_api.global.account.data.type;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.soom.account_api.domain.sign.exception.UnknownSchoolTypeException;
+import com.soom.account_api.global.account.exception.UnknownSchoolTypeException;
 
 import java.util.Arrays;
 import java.util.Locale;
