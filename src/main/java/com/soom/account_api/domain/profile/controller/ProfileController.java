@@ -33,7 +33,7 @@ public class ProfileController {
         //아이디를 통해 계정정보를 가져온다
         final AccountDto dto = profileService.getById(accountId);
         //계정정보를 응답객체로 치환하여 반환한다.
-        final ProfileResponse response = getResponseByDto(dto);
+        final ProfileResponse response = getResponseByDto(accountId, dto);
         return ResponseEntity.ok(response);
     }
 
@@ -45,7 +45,7 @@ public class ProfileController {
         //아이디를 통해 계정정보를 가져온다
         final AccountDto dto = profileService.getById(accountId);
         //계정정보를 응답객체로 치환하여 반환한다.
-        final ProfileResponse response = getResponseByDto(dto);
+        final ProfileResponse response = getResponseByDto(accountId, dto);
         return ResponseEntity.ok(response);
     }
 
@@ -57,7 +57,7 @@ public class ProfileController {
         //아이디를와 프로필 정보를 통해 해당 계정의 프로필 정보를 수정한다.
         final AccountDto dto = profileService.updateById(accountId, getDtoByRequest(request));
         //수정된 프로필을 반환한다.
-        final ProfileResponse response = getResponseByDto(dto);
+        final ProfileResponse response = getResponseByDto(accountId, dto);
         return ResponseEntity.ok(response);
     }
 
@@ -68,7 +68,7 @@ public class ProfileController {
         //아이디를와 프로필 정보를 통해 해당 계정의 프로필 정보를 수정한다.
         final AccountDto dto = profileService.updateById(accountId, getDtoByRequest(request));
         //수정된 프로필을 반환한다.
-        final ProfileResponse response = getResponseByDto(dto);
+        final ProfileResponse response = getResponseByDto(accountId, dto);
         return ResponseEntity.ok(response);
     }
 
@@ -79,7 +79,7 @@ public class ProfileController {
         //아이디를와 프로필 정보를 통해 해당 계정의 프로필 정보를 수정한다.
         final AccountDto dto = profileService.updateById(accountId, getDtoByRequest(request));
         //수정된 프로필을 반환한다.
-        final ProfileResponse response = getResponseByDto(dto);
+        final ProfileResponse response = getResponseByDto(accountId, dto);
         return ResponseEntity.ok(response);
     }
 
@@ -95,9 +95,9 @@ public class ProfileController {
         return new UpdateStudentProfileInfoDto(request.admissionYear(), request.schoolNumber(), request.department());
     }
 
-    private ProfileResponse getResponseByDto(AccountDto dto) {
-        if(dto instanceof StudentDto) return new ProfileResponse(AccountType.STUDENT, (StudentDto) dto, null);
-        if(dto instanceof TeacherDto) return new ProfileResponse(AccountType.TEACHER, null, (TeacherDto) dto);
+    private ProfileResponse getResponseByDto(Long id, AccountDto dto) {
+        if(dto instanceof StudentDto) return new ProfileResponse(id, AccountType.STUDENT, (StudentDto) dto, null);
+        if(dto instanceof TeacherDto) return new ProfileResponse(id, AccountType.TEACHER, null, (TeacherDto) dto);
         throw new IllegalStateException("Unexpected value: " + dto); //Internal Server Error : 로직이 동기화되지 않았을경우
     }
 }
